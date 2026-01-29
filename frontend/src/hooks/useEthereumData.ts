@@ -11,7 +11,7 @@ import type { Transaction, BalanceData, UseEthereumDataResult } from "@/types";
 // ============================================================
 // 🔧 MOCK DATA TOGGLE - Set to true to use mock data for testing UI
 // ============================================================
-const USE_MOCK_DATA = true;
+const USE_MOCK_DATA = false;
 
 // Mock balance data
 const MOCK_BALANCE: BalanceData = {
