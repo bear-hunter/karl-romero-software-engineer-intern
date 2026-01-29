@@ -64,7 +64,7 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install requirements.txt
+pip install -r requirements.txt
 
 # Create environment file
 cp .env.example .env  # Or create manually
