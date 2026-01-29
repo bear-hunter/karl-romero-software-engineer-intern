@@ -2,6 +2,7 @@
 
 /**
  * Wallet connection component with connect/disconnect functionality.
+ * AR Data-inspired styling with coral accent borders.
  */
 
 import { useState } from "react";
@@ -32,19 +33,19 @@ export function WalletConnect() {
 
   if (isConnected && address) {
     return (
-      <div className="flex flex-col sm:flex-row items-center gap-4 p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 shadow-2xl">
+      <div className="flex flex-col sm:flex-row items-center gap-4 p-5 bg-[#0d0d0d] rounded-2xl border border-[#1a1a1a]">
         {/* Connected Status Indicator */}
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-            <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+            <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full"></div>
+            <div className="absolute inset-0 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping opacity-50"></div>
           </div>
-          <span className="text-sm text-slate-400 font-medium">Connected</span>
+          <span className="text-sm text-neutral-400 font-medium">Connected</span>
         </div>
 
         {/* Address Display */}
-        <div className="flex items-center gap-3 px-4 py-2 bg-slate-800/80 rounded-xl border border-slate-600/30">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+        <div className="flex items-center gap-3 px-4 py-2.5 bg-[#141414] rounded-xl">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff6b6b] to-[#c77d7d] flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"
               fill="currentColor"
@@ -57,16 +58,16 @@ export function WalletConnect() {
               />
             </svg>
           </div>
-          <code className="text-white font-mono text-sm tracking-wide">
+          <code className="text-white font-mono text-sm tracking-wider">
             {truncateAddress(address)}
           </code>
           <button
             onClick={() => navigator.clipboard.writeText(address)}
-            className="p-1.5 hover:bg-slate-700/50 rounded-lg transition-colors group"
+            className="p-1.5 hover:bg-white/10 rounded-lg transition-colors group"
             title="Copy address"
           >
             <svg
-              className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors"
+              className="w-4 h-4 text-neutral-500 group-hover:text-[#ff6b6b] transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -74,7 +75,7 @@ export function WalletConnect() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={1.5}
                 d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
               />
             </svg>
@@ -84,7 +85,7 @@ export function WalletConnect() {
         {/* Disconnect Button */}
         <button
           onClick={() => disconnect()}
-          className="px-5 py-2.5 bg-gradient-to-r from-red-500/20 to-rose-500/20 hover:from-red-500/30 hover:to-rose-500/30 text-red-400 hover:text-red-300 rounded-xl font-medium transition-all duration-200 border border-red-500/30 hover:border-red-400/50 hover:shadow-lg hover:shadow-red-500/10"
+          className="px-5 py-2.5 bg-transparent hover:bg-red-500/10 text-neutral-400 hover:text-red-400 rounded-xl font-medium transition-all duration-200 border border-[#1a1a1a] hover:border-red-500/30"
         >
           Disconnect
         </button>
@@ -93,26 +94,26 @@ export function WalletConnect() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-start gap-4">
       {error && (
-        <div className="px-4 py-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm">
+        <div className="px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
           {error}
         </div>
       )}
       <button
         onClick={handleConnect}
         disabled={isConnecting}
-        className="group relative px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 disabled:from-slate-600 disabled:to-slate-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-xl hover:shadow-violet-500/25 disabled:cursor-not-allowed overflow-hidden"
+        className="group relative px-8 py-4 bg-transparent border border-[#ff6b6b]/50 hover:border-[#ff6b6b] text-white font-medium rounded-xl transition-all duration-300 btn-coral-glow disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
       >
-        {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-400 to-fuchsia-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+        {/* Gradient background on hover */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#ff6b6b]/10 to-[#c77d7d]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
         {/* Button content */}
         <span className="relative flex items-center gap-3">
           {isConnecting ? (
             <>
               <svg
-                className="w-5 h-5 animate-spin"
+                className="w-5 h-5 animate-spin text-[#ff6b6b]"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -130,12 +131,13 @@ export function WalletConnect() {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 />
               </svg>
-              Connecting...
+              <span className="text-neutral-300">Connecting...</span>
             </>
           ) : (
             <>
+              <span>Connect Wallet</span>
               <svg
-                className="w-5 h-5"
+                className="w-4 h-4 text-[#ff6b6b] group-hover:translate-x-1 transition-transform"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -144,10 +146,9 @@ export function WalletConnect() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-              Connect Wallet
             </>
           )}
         </span>

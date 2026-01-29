@@ -28,7 +28,7 @@ A full-stack application that allows users to connect their Ethereum wallet and 
 Before running the application, ensure you have the following installed:
 
 - **Node.js** 18+ or **Bun** runtime
-- **Python** 3.10+
+- **Python** 3.14
 - **PostgreSQL** 15+
 - **Redis** 6+
 - **MetaMask** browser extension (for testing)
@@ -64,7 +64,7 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install fastapi uvicorn python-dotenv web3 httpx redis psycopg2-binary sqlalchemy
+pip install requirements.txt
 
 # Create environment file
 cp .env.example .env  # Or create manually

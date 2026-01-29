@@ -2,6 +2,7 @@
 
 /**
  * Main page component - Ethereum Tracker Dashboard
+ * AR Data-inspired design with coral accents and geometric elements
  */
 
 import { useAccount } from "wagmi";
@@ -9,44 +10,152 @@ import { WalletConnect } from "@/components/WalletConnect";
 import { Balance } from "@/components/Balance";
 import { TransactionHistory } from "@/components/TransactionHistory";
 
+// SVG Network mesh background component
+function NetworkMesh() {
+  return (
+    <svg
+      className="absolute inset-0 w-full h-full opacity-30"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <pattern
+          id="mesh-dots"
+          x="0"
+          y="0"
+          width="60"
+          height="60"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="2" cy="2" r="1.5" fill="rgba(255, 107, 107, 0.3)" />
+        </pattern>
+        <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="rgba(255, 107, 107, 0.4)" />
+          <stop offset="100%" stopColor="rgba(255, 107, 107, 0.05)" />
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#mesh-dots)" />
+      {/* Connection lines */}
+      <g stroke="url(#line-gradient)" strokeWidth="0.5" fill="none">
+        <path d="M0,200 Q200,100 400,300 T800,200" className="animate-line-draw" />
+        <path d="M100,0 Q300,200 500,100 T900,300" className="animate-line-draw" style={{ animationDelay: '2s' }} />
+        <path d="M0,400 Q150,300 350,450 T700,350" className="animate-line-draw" style={{ animationDelay: '4s' }} />
+      </g>
+    </svg>
+  );
+}
+
+// 3D Sphere component inspired by AR Data
+function GeoSphere() {
+  return (
+    <div className="relative w-64 h-64 lg:w-80 lg:h-80 float-animation">
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b6b]/40 to-[#c77d7d]/20 rounded-full blur-3xl pulse-glow" />
+      
+      {/* Main sphere */}
+      <svg
+        viewBox="0 0 200 200"
+        className="w-full h-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="sphere-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ff8a80" />
+            <stop offset="50%" stopColor="#c77d7d" />
+            <stop offset="100%" stopColor="#8b4545" />
+          </linearGradient>
+          <linearGradient id="grid-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255, 255, 255, 0.3)" />
+            <stop offset="100%" stopColor="rgba(255, 255, 255, 0.05)" />
+          </linearGradient>
+          <filter id="sphere-shadow">
+            <feDropShadow dx="0" dy="10" stdDeviation="20" floodColor="#ff6b6b" floodOpacity="0.3" />
+          </filter>
+        </defs>
+        
+        {/* Sphere base */}
+        <circle
+          cx="100"
+          cy="100"
+          r="80"
+          fill="url(#sphere-gradient)"
+          filter="url(#sphere-shadow)"
+        />
+        
+        {/* Grid lines - vertical */}
+        <g stroke="url(#grid-stroke)" strokeWidth="0.5" fill="none">
+          <ellipse cx="100" cy="100" rx="80" ry="80" />
+          <ellipse cx="100" cy="100" rx="60" ry="80" />
+          <ellipse cx="100" cy="100" rx="35" ry="80" />
+          <ellipse cx="100" cy="100" rx="10" ry="80" />
+          {/* Horizontal lines */}
+          <ellipse cx="100" cy="100" rx="80" ry="20" />
+          <ellipse cx="100" cy="100" rx="80" ry="45" />
+          <ellipse cx="100" cy="100" rx="80" ry="65" />
+          <ellipse cx="100" cy="70" rx="72" ry="15" />
+          <ellipse cx="100" cy="130" rx="72" ry="15" />
+        </g>
+        
+        {/* Highlight */}
+        <ellipse
+          cx="70"
+          cy="65"
+          rx="25"
+          ry="15"
+          fill="rgba(255, 255, 255, 0.15)"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default function Home() {
   const { isConnected } = useAccount();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      {/* Animated background elements */}
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* Background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-fuchsia-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute -bottom-40 right-1/3 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+        {/* Network mesh pattern */}
+        <NetworkMesh />
+        
+        {/* Coral gradient orb - positioned like AR Data sphere */}
+        <div className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-gradient-to-br from-[#ff6b6b]/20 via-[#c77d7d]/10 to-transparent rounded-full blur-3xl pulse-glow" />
+        
+        {/* Subtle bottom left glow */}
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-gradient-to-tr from-[#ff6b6b]/10 to-transparent rounded-full blur-3xl" />
       </div>
 
       {/* Main content */}
       <div className="relative z-10">
         {/* Header */}
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-          <div className="max-w-6xl mx-auto px-6 py-4">
+        <header className="border-b border-white/5 glass">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff6b6b] to-[#c77d7d] flex items-center justify-center shadow-lg shadow-[#ff6b6b]/20">
                   <svg
-                    className="w-6 h-6 text-white"
+                    className="w-5 h-5 text-white"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z" />
                   </svg>
                 </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                  Ethereum Tracker
-                </span>
+                <div>
+                  <span className="text-xl font-semibold text-white tracking-tight">
+                    Ethereum <span className="text-gradient-coral">Tracker</span>
+                  </span>
+                </div>
               </div>
 
               {/* Network badge */}
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/50 rounded-full border border-slate-700/50">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span className="text-sm text-slate-300 font-medium">
+              <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+                <div className="relative">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                  <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping opacity-50"></div>
+                </div>
+                <span className="text-sm text-neutral-300 font-medium">
                   Mainnet
                 </span>
               </div>
@@ -55,126 +164,76 @@ export default function Home() {
         </header>
 
         {/* Hero Section */}
-        <main className="max-w-6xl mx-auto px-6 py-12">
+        <main className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           {!isConnected ? (
-            /* Not connected state */
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-              {/* Icon */}
-              <div className="w-24 h-24 mb-8 rounded-3xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 border border-violet-500/20 flex items-center justify-center">
-                <svg
-                  className="w-12 h-12 text-violet-400"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z" />
-                </svg>
+            /* Not connected state - AR Data inspired asymmetric hero */
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center min-h-[70vh]">
+              {/* Left content */}
+              <div className="order-2 lg:order-1">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
+                  <span className="text-white">Track Your</span>
+                  <br />
+                  <span className="text-gradient-coral">Ethereum</span>
+                  <span className="text-white"> Portfolio</span>
+                </h1>
+                
+                <p className="text-lg text-neutral-400 mb-10 max-w-lg leading-relaxed">
+                  Monitor your wallet balance and transaction history in real-time. 
+                  Connect securely with your preferred wallet provider.
+                </p>
+
+                {/* Connect Button */}
+                <WalletConnect />
+
+                {/* Feature badges */}
+                <div className="flex flex-wrap gap-3 mt-10">
+                  <div className="px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm text-neutral-400">
+                    <span className="text-[#ff6b6b] mr-2">●</span>
+                    Real-time Balance
+                  </div>
+                  <div className="px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm text-neutral-400">
+                    <span className="text-[#ff6b6b] mr-2">●</span>
+                    Transaction History
+                  </div>
+                  <div className="px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm text-neutral-400">
+                    <span className="text-[#ff6b6b] mr-2">●</span>
+                    Secure Connection
+                  </div>
+                </div>
               </div>
 
-              {/* Title */}
-              <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                Track Your Ethereum
-              </h1>
-              <p className="text-lg text-slate-400 mb-10 max-w-md">
-                Connect your wallet to view your balance and recent transactions
-                on the Ethereum network.
-              </p>
-
-              {/* Connect Button */}
-              <WalletConnect />
-
-              {/* Features */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 w-full max-w-3xl">
-                <div className="p-6 bg-slate-800/30 rounded-2xl border border-slate-700/30 backdrop-blur-sm">
-                  <div className="w-12 h-12 mb-4 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-amber-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    View Balance
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    Check your ETH balance in real-time directly from the
-                    blockchain.
-                  </p>
-                </div>
-
-                <div className="p-6 bg-slate-800/30 rounded-2xl border border-slate-700/30 backdrop-blur-sm">
-                  <div className="w-12 h-12 mb-4 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    Transaction History
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    View your last 10 transactions with detailed information.
-                  </p>
-                </div>
-
-                <div className="p-6 bg-slate-800/30 rounded-2xl border border-slate-700/30 backdrop-blur-sm">
-                  <div className="w-12 h-12 mb-4 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-emerald-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">
-                    Secure Connection
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    Connect securely with MetaMask, WalletConnect, and more.
-                  </p>
-                </div>
+              {/* Right side - 3D Sphere */}
+              <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+                <GeoSphere />
               </div>
             </div>
           ) : (
             /* Connected state - Dashboard */
             <div className="space-y-8">
+              {/* Welcome header */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-semibold text-white mb-2">
+                  Welcome back
+                </h2>
+                <p className="text-neutral-400">
+                  Your Ethereum dashboard overview
+                </p>
+              </div>
+
               {/* Wallet Connection Status */}
               <WalletConnect />
 
               {/* Dashboard Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Balance Card */}
                 <div className="lg:col-span-1">
                   <Balance />
                 </div>
 
-                {/* Placeholder for additional stats */}
-                <div className="lg:col-span-1 p-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 shadow-2xl">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
+                {/* Network Status Card */}
+                <div className="lg:col-span-1 h-full p-6 bg-[#0d0d0d] rounded-2xl border border-[#1a1a1a] hover:border-[#ff6b6b]/20 transition-all duration-300">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
                       <svg
                         className="w-5 h-5 text-emerald-400"
                         fill="none"
@@ -184,26 +243,29 @@ export default function Home() {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={2}
+                          strokeWidth={1.5}
                           d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                         />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-white">
+                    <h3 className="text-lg font-medium text-white">
                       Network Status
                     </h3>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
-                      <span className="text-slate-400">Network</span>
+                    <div className="flex items-center justify-between p-4 bg-[#141414] rounded-xl">
+                      <span className="text-neutral-400">Network</span>
                       <span className="text-white font-medium">
                         Ethereum Mainnet
                       </span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
-                      <span className="text-slate-400">Status</span>
+                    <div className="flex items-center justify-between p-4 bg-[#141414] rounded-xl">
+                      <span className="text-neutral-400">Status</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <div className="relative">
+                          <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                          <div className="absolute inset-0 w-2 h-2 bg-emerald-400 rounded-full animate-ping opacity-50"></div>
+                        </div>
                         <span className="text-emerald-400 font-medium">
                           Connected
                         </span>
@@ -220,10 +282,10 @@ export default function Home() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-slate-800/50 mt-20">
-          <div className="max-w-6xl mx-auto px-6 py-8">
+        <footer className="border-t border-white/5 mt-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-neutral-500">
                 Built with Next.js, ethers.js & WalletConnect
               </p>
               <div className="flex items-center gap-6">
@@ -231,7 +293,7 @@ export default function Home() {
                   href="https://etherscan.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                  className="text-sm text-neutral-500 hover:text-[#ff6b6b] transition-colors"
                 >
                   Etherscan
                 </a>
@@ -239,7 +301,7 @@ export default function Home() {
                   href="https://ethereum.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                  className="text-sm text-neutral-500 hover:text-[#ff6b6b] transition-colors"
                 >
                   Ethereum.org
                 </a>
